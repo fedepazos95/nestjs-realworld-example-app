@@ -37,11 +37,11 @@ resource "aws_ecs_task_definition" "task_definition" {
   family = "service"
   container_definitions = jsonencode([
     {
-      name      = "nestjs-realworld-example-app"
-      image     = aws_ecr_repository.ecr.repository_url
-      cpu       = 1
-      memory    = 512
-      essential = true
+      name        = "nestjs-realworld-example-app"
+      image       = aws_ecr_repository.ecr.repository_url
+      cpu         = 1
+      memory      = 512
+      essential   = true
       networkMode = "awsvpc"
       portMappings = [
         {
