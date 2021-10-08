@@ -34,7 +34,7 @@ resource "aws_ecr_repository" "ecr" {
 }
 
 resource "aws_ecs_task_definition" "task_definition" {
-  family = "service"
+  family = "nestjs-realworld-example-app"
   container_definitions = jsonencode([
     {
       name        = "nestjs-realworld-example-app"
@@ -60,6 +60,14 @@ resource "aws_ecs_task_definition" "task_definition" {
     type       = "memberOf"
     expression = "attribute:ecs.availability-zone in [us-west-2a, us-west-2b]"
   }
+}
+
+resource "aws_ecs_service" "ecs_service" {
+  name            = "nestjs-realworld-example-app"
+  cluster         = "cluster-example-default"
+  task_definition = aws_ecs_task_definition.task_definition.arn
+  desired_count   = 1
+  iam_role        = "arn:aws:iam::960673230763:role/ecsTaskRole"
 }
 
 output "ecr_repository_url" {
