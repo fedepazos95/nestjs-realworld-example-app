@@ -1,0 +1,27 @@
+version: '3.6'
+services: 
+  nestjs:
+    build: .
+    command: npm start
+    volumes:
+      - .:/usr/app/
+      - /usr/app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    # environment:
+    #   DATABASE_URL: postgres://todoapp@postgres/todos
+  postgres:
+      image: postgres
+      restart: always
+      environment: 
+          - DATABASE_HOST=127.0.0.1
+          - POSTGRES_USER=root
+          - POSTGRES_PASSWORD=root
+          - POSTGRES_DB=nestjsrealworld  
+
+      ports: 
+          - "5432:5432"
+      volumes: 
+          - ./docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
