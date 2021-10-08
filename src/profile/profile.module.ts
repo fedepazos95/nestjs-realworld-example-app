@@ -6,9 +6,10 @@ import { UserModule } from '../user/user.module';
 import {UserEntity} from "../user/user.entity";
 import {FollowsEntity} from "./follows.entity";
 import {AuthMiddleware} from "../user/auth.middleware";
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity, FollowsEntity]), UserModule],
+  imports: [TypeOrmModule.forFeature([UserEntity, FollowsEntity]), UserModule, ConfigModule],
   providers: [ProfileService],
   controllers: [
     ProfileController

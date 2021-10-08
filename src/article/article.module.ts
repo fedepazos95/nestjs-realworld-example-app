@@ -8,9 +8,10 @@ import { FollowsEntity } from '../profile/follows.entity';
 import { ArticleService } from './article.service';
 import { AuthMiddleware } from '../user/auth.middleware';
 import { UserModule } from '../user/user.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ArticleEntity, Comment, UserEntity, FollowsEntity]), UserModule],
+  imports: [TypeOrmModule.forFeature([ArticleEntity, Comment, UserEntity, FollowsEntity]), UserModule, ConfigModule],
   providers: [ArticleService],
   controllers: [
     ArticleController
