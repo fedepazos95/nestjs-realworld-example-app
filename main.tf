@@ -79,7 +79,7 @@ resource "aws_ecs_cluster" "cluster" {
 }
 
 resource "aws_ecr_repository" "repo" {
-  name                 = "nestjs-realworld-example-repository"
+  name                 = "nestjs-realworld-example"
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
