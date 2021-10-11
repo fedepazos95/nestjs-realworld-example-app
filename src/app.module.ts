@@ -6,7 +6,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Connection } from "typeorm";
 import { ProfileModule } from "./profile/profile.module";
 import { TagModule } from "./tag/tag.module";
-import { ConfigModule, ConfigService } from "@nestjs/config";
+import { ConfigModule } from "@nestjs/config";
 import configuration from "./config";
 
 @Module({
@@ -15,20 +15,7 @@ import configuration from "./config";
       load: [configuration],
       cache: true,
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        type: "postgres",
-        host: configService.get('database.host'),
-        port: +configService.get<number>('database.port'),
-        username: configService.get('database.username'),
-        password: configService.get('database.password'),
-        database: configService.get('database.name'),
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: true,
-      }),
-      inject: [ConfigService],
-    }),
+    TypeOrmModule.forRoot(),
     ArticleModule,
     UserModule,
     ProfileModule,
