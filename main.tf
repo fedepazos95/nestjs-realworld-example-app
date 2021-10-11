@@ -85,6 +85,17 @@ resource "aws_subnet" "public" {
   }
 }
 
+resource "aws_internet_gateway" "gw" {
+  vpc_id = aws_vpc.main.id
+}
+
+resource "aws_route" "internet_access" {
+  route_table_id         = aws_vpc.main.main_route_table_id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.gw.id
+}
+
+
 resource "aws_ecs_cluster" "cluster" {
   name = "nestjs-realworld-example-cluster"
 }
