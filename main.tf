@@ -162,7 +162,12 @@ resource "aws_ecs_task_definition" "task" {
         }
       ]
       logConfiguration = {
-        logDriver : "awslogs"
+        logDriver : "awslogs",
+        options : {
+          "awslogs-group" : "nestjs-realworld-example",
+          "awslogs-region" : data.aws_region.current.name,
+          "awslogs-stream-prefix" : "ecs"
+        }
       }
     }
   ])
