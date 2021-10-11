@@ -77,6 +77,15 @@ resource "aws_subnet" "main" {
   }
 }
 
+resource "aws_subnet" "secondary" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "10.0.2.0/24"
+
+  tags = {
+    Name = "nestjs-realworld-example-subnet2"
+  }
+}
+
 resource "aws_ecs_cluster" "cluster" {
   name = "nestjs-realworld-example-cluster"
 }
