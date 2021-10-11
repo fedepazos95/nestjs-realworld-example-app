@@ -104,13 +104,13 @@ resource "aws_ecs_task_definition" "task" {
       cpu       = 10
       memory    = 512
       essential = true
-      environment : [
-        { "name" : "PORT", "value" : 3000 },
-        { "name" : "TYPEORM_SYNCHRONIZE", "value" : true },
-        { "name" : "TYPEORM_LOGGING", "value" : true },
+      environment = [
+        { "name" : "PORT", "value" : "3000" },
+        { "name" : "TYPEORM_SYNCHRONIZE", "value" : "true" },
+        { "name" : "TYPEORM_LOGGING", "value" : "true" },
         { "name" : "TYPEORM_ENTITIES", "value" : "./**/*.entity.js,./**/*.entity.ts" }
       ]
-      secrets : [
+      secrets = [
         {
           "name" : "TYPEORM_CONNECTION",
           "valueFrom" : "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/nestjs-realworld-example-typeorm_connection"
@@ -142,7 +142,7 @@ resource "aws_ecs_task_definition" "task" {
           hostPort      = 3000
         }
       ]
-      logConfiguration : {
+      logConfiguration = {
         logDriver : "awslogs",
         secretOptions : null,
         options : {
