@@ -96,7 +96,7 @@ resource "aws_ecs_task_definition" "task" {
   network_mode             = "awsvpc"
   container_definitions = jsonencode([
     {
-      name      = "nestjs-realworld-example-service"
+      name      = "nestjs-realworld-example"
       image     = aws_ecr_repository.repo.repository_url
       cpu       = 10
       memory    = 512
@@ -111,7 +111,7 @@ resource "aws_ecs_task_definition" "task" {
         logDriver : "awslogs",
         secretOptions : null,
         options : {
-          "awslogs-group" : "/ecs/nestjs-realworld-example-service",
+          "awslogs-group" : "/ecs/nestjs-realworld-example",
           "awslogs-region" : "eu-west-1",
           "awslogs-stream-prefix" : "ecs"
         }
