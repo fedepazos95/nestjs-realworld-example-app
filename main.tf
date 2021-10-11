@@ -26,6 +26,12 @@ provider "aws" {
 
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
+data "aws_availability_zones" "available" {}
+
+variable "az_count" {
+  description = "Number of AZs to cover in a given AWS region"
+  default     = "2"
+}
 
 resource "aws_vpc" "main" {
   cidr_block       = "10.0.0.0/16"
@@ -67,22 +73,15 @@ resource "aws_default_security_group" "default" {
     }
   ]
 }
-
-resource "aws_subnet" "main" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.1.0/24"
-
-  tags = {
-    Name = "nestjs-realworld-example-subnet"
-  }
-}
-
-resource "aws_subnet" "secondary" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.2.0/24"
+resource "aws_subnet" "public" {
+  count                   = "${var.az_count}"
+  cidr_block              = "${cidrsubnet(aws_vpc.main.cidr_block, 8, var.az_count + count.index)}"
+  availability_zone       = "${data.aws_availability_zones.available.names[count.index]}"
+  vpc_id                  = "${aws_vpc.main.id}"
+  map_public_ip_on_launch = true
 
   tags = {
-    Name = "nestjs-realworld-example-subnet2"
+    Type        = "public"
   }
 }
 
