@@ -109,9 +109,6 @@ resource "aws_ecr_repository" "repo" {
   }
 }
 
-resource "aws_cloudwatch_log_group" "log_group" {
-  name = "/ecs/nestjs-realworld-example"
-}
 resource "aws_ecs_task_definition" "task" {
   family                   = "nestjs-realworld-example"
   execution_role_arn       = "arn:aws:iam::960673230763:role/ecsTaskExecutionRole"
@@ -164,15 +161,6 @@ resource "aws_ecs_task_definition" "task" {
           hostPort      = 3000
         }
       ]
-      logConfiguration = {
-        logDriver : "awslogs",
-        secretOptions : null,
-        options : {
-          "awslogs-group" : "/ecs/nestjs-realworld-example",
-          "awslogs-region" : "eu-west-1",
-          "awslogs-stream-prefix" : "ecs"
-        }
-      }
     }
   ])
 }
