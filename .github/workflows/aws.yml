@@ -34,7 +34,7 @@ env:
   AWS_REGION: eu-west-1
   ECR_REPOSITORY: nestjs-realworld-example
   ECS_SERVICE: nestjs-realworld-example
-  ECS_CLUSTER: nestjs-realworld-example
+  ECS_CLUSTER: nestjs-realworld-example-cluster
   ECS_TASK_DEFINITION: .aws/task_definition.json
   CONTAINER_NAME: nestjs-realworld-example
 
