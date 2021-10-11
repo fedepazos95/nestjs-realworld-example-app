@@ -164,13 +164,21 @@ resource "aws_ecs_task_definition" "task" {
       logConfiguration = {
         logDriver : "awslogs",
         options : {
-          "awslogs-group" : "nestjs-realworld-example",
+          "awslogs-group" : "/ecs/nestjs-realworld-example",
           "awslogs-region" : data.aws_region.current.name,
-          "awslogs-stream-prefix" : "ecs"
+          "awslogs-stream-prefix" : "nestjs-realworld-example"
         }
       }
     }
   ])
+}
+
+resource "aws_cloudwatch_log_group" "logs" {
+  name = "/ecs/nestjs-realworld-example"
+
+  tags = {
+    Application = "nestjs-realworld-example"
+  }
 }
 
 resource "aws_ecs_service" "service" {
