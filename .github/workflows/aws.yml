@@ -32,11 +32,11 @@ on:
 
 env:
   AWS_REGION: eu-west-1
-  ECR_REPOSITORY: nestjs-example
-  ECS_SERVICE: nestjs-example
-  ECS_CLUSTER: nestjs-example
+  ECR_REPOSITORY: nestjs-realworld-example
+  ECS_SERVICE: nestjs-realworld-example
+  ECS_CLUSTER: nestjs-realworld-example
   ECS_TASK_DEFINITION: .aws/task_definition.json
-  CONTAINER_NAME: nestjs-example
+  CONTAINER_NAME: nestjs-realworld-example
 
 jobs:
   deploy:
