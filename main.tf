@@ -29,7 +29,7 @@ resource "aws_vpc" "main" {
   instance_tenancy = "default"
 
   tags = {
-    Name = "nestjs-realworld-example"
+    Name = "nestjs-realworld-example-vpc"
   }
 }
 
@@ -88,7 +88,7 @@ resource "aws_ecr_repository" "repo" {
 }
 
 resource "aws_ecs_task_definition" "task" {
-  family                   = "nestjs-realworld-example-service"
+  family                   = "nestjs-realworld-example"
   execution_role_arn       = "arn:aws:iam::960673230763:role/ecsTaskExecutionRole"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
@@ -121,7 +121,7 @@ resource "aws_ecs_task_definition" "task" {
 }
 
 resource "aws_ecs_service" "service" {
-  name            = "nestjs-realworld-example-service"
+  name            = "nestjs-realworld-example"
   cluster         = aws_ecs_cluster.cluster.id
   task_definition = aws_ecs_task_definition.task.arn
   desired_count   = 0
