@@ -25,6 +25,7 @@ provider "aws" {
 }
 
 data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
 
 resource "aws_vpc" "main" {
   cidr_block       = "10.0.0.0/16"
@@ -112,27 +113,27 @@ resource "aws_ecs_task_definition" "task" {
       secrets : [
         {
           "name" : "TYPEORM_CONNECTION",
-          "valueFrom" : "arn:aws:ssm:${aws.region}:${data.aws_caller_identity.current.account_id}:parameter/nestjs-realworld-example-typeorm_connection"
+          "valueFrom" : "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/nestjs-realworld-example-typeorm_connection"
         },
         {
           "name" : "TYPEORM_HOST",
-          "valueFrom" : "arn:aws:ssm:${aws.region}:${data.aws_caller_identity.current.account_id}:parameter/nestjs-realworld-example-typeorm_host"
+          "valueFrom" : "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/nestjs-realworld-example-typeorm_host"
         },
         {
           "name" : "TYPEORM_USERNAME",
-          "valueFrom" : "arn:aws:ssm:${aws.region}:${data.aws_caller_identity.current.account_id}:parameter/nestjs-realworld-example-typeorm_username"
+          "valueFrom" : "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/nestjs-realworld-example-typeorm_username"
         },
         {
           "name" : "TYPEORM_PASSWORD",
-          "valueFrom" : "arn:aws:ssm:${aws.region}:${data.aws_caller_identity.current.account_id}:parameter/nestjs-realworld-example-typeorm_password"
+          "valueFrom" : "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/nestjs-realworld-example-typeorm_password"
         },
         {
           "name" : "TYPEORM_DATABASE",
-          "valueFrom" : "arn:aws:ssm:${aws.region}:${data.aws_caller_identity.current.account_id}:parameter/nestjs-realworld-example-typeorm_database"
+          "valueFrom" : "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/nestjs-realworld-example-typeorm_database"
         },
         {
           "name" : "TYPEORM_PORT",
-          "valueFrom" : "arn:aws:ssm:${aws.region}:${data.aws_caller_identity.current.account_id}:parameter/nestjs-realworld-example-typeorm_port"
+          "valueFrom" : "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/nestjs-realworld-example-typeorm_port"
         }
       ]
       portMappings = [
