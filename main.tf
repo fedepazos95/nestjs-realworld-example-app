@@ -171,7 +171,7 @@ resource "aws_ecs_service" "service" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets          = [aws_subnet.main.id]
+    subnets          = element(aws_subnet.public.*.id, count.index)
     security_groups  = [aws_default_security_group.default.id]
     assign_public_ip = true
   }
