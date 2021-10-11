@@ -24,6 +24,8 @@ provider "aws" {
   region = "eu-west-1"
 }
 
+data "aws_caller_identity" "current" {}
+
 resource "aws_vpc" "main" {
   cidr_block       = "10.0.0.0/16"
   instance_tenancy = "default"
@@ -101,6 +103,38 @@ resource "aws_ecs_task_definition" "task" {
       cpu       = 10
       memory    = 512
       essential = true
+      environment : [
+        { "name" : "PORT", "value" : 3000 },
+        { "name" : "TYPEORM_SYNCHRONIZE", "value" : true },
+        { "name" : "TYPEORM_LOGGING", "value" : true },
+        { "name" : "TYPEORM_ENTITIES", "value" : "./**/*.entity.js,./**/*.entity.ts" }
+      ]
+      secrets : [
+        {
+          "name" : "TYPEORM_CONNECTION",
+          "valueFrom" : "arn:aws:ssm:${aws.region}:${data.aws_caller_identity.current.account_id}:parameter/nestjs-realworld-example-typeorm_connection"
+        },
+        {
+          "name" : "TYPEORM_HOST",
+          "valueFrom" : "arn:aws:ssm:${aws.region}:${data.aws_caller_identity.current.account_id}:parameter/nestjs-realworld-example-typeorm_host"
+        },
+        {
+          "name" : "TYPEORM_USERNAME",
+          "valueFrom" : "arn:aws:ssm:${aws.region}:${data.aws_caller_identity.current.account_id}:parameter/nestjs-realworld-example-typeorm_username"
+        },
+        {
+          "name" : "TYPEORM_PASSWORD",
+          "valueFrom" : "arn:aws:ssm:${aws.region}:${data.aws_caller_identity.current.account_id}:parameter/nestjs-realworld-example-typeorm_password"
+        },
+        {
+          "name" : "TYPEORM_DATABASE",
+          "valueFrom" : "arn:aws:ssm:${aws.region}:${data.aws_caller_identity.current.account_id}:parameter/nestjs-realworld-example-typeorm_database"
+        },
+        {
+          "name" : "TYPEORM_PORT",
+          "valueFrom" : "arn:aws:ssm:${aws.region}:${data.aws_caller_identity.current.account_id}:parameter/nestjs-realworld-example-typeorm_port"
+        }
+      ]
       portMappings = [
         {
           containerPort = 3000
