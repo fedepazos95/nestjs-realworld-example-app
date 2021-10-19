@@ -7,9 +7,9 @@ const { Client } = require("pg");
 
 dotenv.config();
 const client = new Client({
-  user: process.env.DATABASE_USERNAME,
-  database: process.env.DATABASE_NAME,
-  password: process.env.DATABASE_PASSWORD,
+  user: process.env.TYPEORM_USERNAME,
+  database: process.env.TYPEORM_DATABASE,
+  password: process.env.TYPEORM_PASSWORD,
 });
 
 function validateOptions(options) {
